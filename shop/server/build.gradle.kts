@@ -1,4 +1,4 @@
 dependencies {
-    implementation(project(":coffee:api:client"))
+    implementation(project(":coffee-java:api:client"))
     implementation(project(":juice:api:client"))
 }

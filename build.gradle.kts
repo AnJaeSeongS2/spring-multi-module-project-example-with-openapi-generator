@@ -13,6 +13,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
+    id("java")
     id("org.springframework.boot").version("2.2.1.RELEASE").apply(false)
     id("io.spring.dependency-management").version("1.0.8.RELEASE").apply(false)
     kotlin("jvm") version "1.3.50"
@@ -20,12 +21,17 @@ plugins {
     kotlin("kapt") version "1.3.50"
     id("com.linecorp.build-recipe-plugin") version "1.0.1"
     id("com.linecorp.recursive-git-log-plugin") version "1.0.1"
+    id("io.freefair.lombok").version("5.2.1").apply(false)
 }
 
 allprojects {
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    apply(plugin = "java")
 }
 
 configureByTypePrefix("kotlin") {
@@ -62,6 +68,7 @@ configureByTypeHaving("boot") {
             dependencySet("com.squareup.retrofit2:2.6.2") {
                 entry("retrofit")
                 entry("converter-jackson")
+                entry("converter-gson")
             }
             dependencySet("org.jetbrains.kotlinx:1.3.2") {
                 entry("kotlinx-coroutines-core")
@@ -106,6 +113,10 @@ configure(byTypeHaving("boot") and byTypeSuffix("lib")) {
     }
 }
 
+configureByTypePrefix("java") {
+    apply(plugin = "io.freefair.lombok")
+}
+
 configure(byTypeSuffix("boot-application") and byLabel("spring-boot-webflux")) {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -127,6 +138,7 @@ configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client")) {
         implementation("org.springframework.boot:spring-boot-starter-validation")
 
         api("com.squareup.retrofit2:retrofit")
+        implementation("com.squareup.retrofit2:converter-gson")
         implementation("com.squareup.retrofit2:converter-jackson")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 

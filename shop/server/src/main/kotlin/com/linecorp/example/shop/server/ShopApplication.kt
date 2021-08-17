@@ -2,7 +2,7 @@ package com.linecorp.example.shop.server
 
 import com.linecorp.example.shop.server.coffee.CoffeeService
 import com.linecorp.example.shop.server.juice.JuiceService
-import com.linecorp.sample.coffee.protocol.Coffee
+import com.sonan.sample.coffee.protocol.Coffee
 import com.linecorp.sample.juice.protocol.Juice
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

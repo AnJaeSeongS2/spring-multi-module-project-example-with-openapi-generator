@@ -1,6 +1,7 @@
 package com.linecorp.sample.juice.api.client
 
 import com.linecorp.sample.juice.protocol.Juice
+import reactor.core.publisher.Mono
 import retrofit2.http.GET
 
 /**
@@ -14,5 +15,5 @@ internal data class JuiceResponse(override val name: String) : Juice
 
 interface JuiceApi {
     @GET("/")
-    suspend fun get(): Juice
+    fun get(): Mono<Juice>
 }

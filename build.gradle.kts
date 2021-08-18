@@ -70,6 +70,9 @@ configureByTypeHaving("boot") {
                 entry("converter-jackson")
                 entry("converter-gson")
             }
+            dependencySet("com.jakewharton.retrofit:2.1.0") {
+                entry("retrofit2-reactor-adapter")
+            }
             dependencySet("org.jetbrains.kotlinx:1.3.2") {
                 entry("kotlinx-coroutines-core")
                 entry("kotlinx-coroutines-reactor")
@@ -140,6 +143,7 @@ configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client")) {
         api("com.squareup.retrofit2:retrofit")
         implementation("com.squareup.retrofit2:converter-gson")
         implementation("com.squareup.retrofit2:converter-jackson")
+        implementation("com.jakewharton.retrofit:retrofit2-reactor-adapter")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
         implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")

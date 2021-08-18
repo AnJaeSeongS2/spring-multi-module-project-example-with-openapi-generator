@@ -13,3 +13,4 @@ include("juice:api:server")
 include("juice:protocol")
 
 include("shop:server")
+include("shop-java:server")

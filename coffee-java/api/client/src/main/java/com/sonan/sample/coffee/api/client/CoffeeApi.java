@@ -1,7 +1,7 @@
 package com.sonan.sample.coffee.api.client;
 
 import com.sonan.sample.coffee.protocol.Coffee;
-import retrofit2.Call;
+import reactor.core.publisher.Mono;
 import retrofit2.http.GET;
 
 /**
@@ -11,6 +11,7 @@ import retrofit2.http.GET;
  * Cons. This exposes concrete response class to outside.
  */
 public interface CoffeeApi {
+
     @GET("/")
-    Call<Coffee> getCoffee();
+    Mono<Coffee> get();
 }

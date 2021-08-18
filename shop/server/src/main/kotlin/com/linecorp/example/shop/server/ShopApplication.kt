@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Mono
 
 @SpringBootApplication
 class ShopApplication
@@ -24,11 +25,13 @@ class BeverageController(
         private val juiceService: JuiceService
 ) {
     @GetMapping("/")
-    suspend fun getRoot() = RootResponse(coffeeService.get(), juiceService.get())
+    fun getRoot() = Mono.zip(coffeeService.get(), juiceService.get()).flatMap { data ->
+        Mono.just(RootResponse(data.t1, data.t2))
+    }
 
     @GetMapping("/coffee")
-    suspend fun getCoffee() = coffeeService.get()
+    fun getCoffee() = coffeeService.get()
 
     @GetMapping("/juice")
-    suspend fun getJuice() = juiceService.get()
+    fun getJuice() = juiceService.get()
 }

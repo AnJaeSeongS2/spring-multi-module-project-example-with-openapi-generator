@@ -1,5 +1,6 @@
 package com.sonan.sample.coffee.api.client;
 
+import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ public class CoffeeApiClientAutoConfiguration {
             .Builder()
             .baseUrl(properties.getBaseUrl())
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(ReactorCallAdapterFactory.create())
             .build()
             .create(CoffeeApi.class);
     }

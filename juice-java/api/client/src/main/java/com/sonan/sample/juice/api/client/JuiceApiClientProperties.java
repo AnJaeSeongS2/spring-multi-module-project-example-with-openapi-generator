@@ -9,12 +9,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author: jaeseong_an
- * @github: https://github.com/AnJaeSeongS2
- * @since: 2021-08-19
- */
-
 @Validated
 @ConstructorBinding
 @ConfigurationProperties("juice.api")

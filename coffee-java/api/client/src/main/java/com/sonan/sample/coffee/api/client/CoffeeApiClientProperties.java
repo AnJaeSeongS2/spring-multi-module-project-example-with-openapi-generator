@@ -9,12 +9,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author: Jaeseong An
- * @since: JEUS 21.0.0.0
- * Created Date: 2021-08-17
- */
-
 @Validated
 @ConstructorBinding
 @ConfigurationProperties("coffee.api")

@@ -1,7 +1,7 @@
 package com.sonan.example.shop.server.juice;
 
-import com.linecorp.sample.juice.api.client.JuiceApi;
-import com.linecorp.sample.juice.protocol.Juice;
+import com.sonan.sample.juice.api.client.JuiceApi;
+import com.sonan.sample.juice.protocol.Juice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

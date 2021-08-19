@@ -2,7 +2,7 @@ package com.sonan.example.shop.server;
 
 import com.sonan.example.shop.server.coffee.CoffeeService;
 import com.sonan.example.shop.server.juice.JuiceService;
-import com.linecorp.sample.juice.protocol.Juice;
+import com.sonan.sample.juice.protocol.Juice;
 import com.sonan.sample.coffee.protocol.Coffee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

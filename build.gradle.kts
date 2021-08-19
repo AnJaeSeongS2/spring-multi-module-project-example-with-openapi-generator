@@ -123,6 +123,11 @@ configureByTypePrefix("java") {
 configure(byTypeSuffix("boot-application") and byLabel("spring-boot-webflux")) {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
+    }
+}
+
+configure(byTypeSuffix("boot-application") and byLabel("spring-boot-webflux") and byTypeHaving("kotlin")) {
+    dependencies {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -142,10 +147,14 @@ configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client")) {
 
         api("com.squareup.retrofit2:retrofit")
         implementation("com.squareup.retrofit2:converter-gson")
-        implementation("com.squareup.retrofit2:converter-jackson")
         implementation("com.jakewharton.retrofit:retrofit2-reactor-adapter")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    }
+}
 
+configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client") and byTypeHaving("kotlin")) {
+    dependencies {
+        implementation("com.squareup.retrofit2:converter-jackson")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
         api("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     }

@@ -1,6 +1,7 @@
 package com.linecorp.sample.coffee.api.client
 
 import com.linecorp.sample.coffee.protocol.Coffee
+import reactor.core.publisher.Mono
 import retrofit2.http.GET
 
 /**
@@ -9,9 +10,7 @@ import retrofit2.http.GET
  *       And Don't need any verbose configuration.
  * Cons. This exposes concrete response class to outside.
  */
-data class CoffeeResponse(override val name: String, override val countryOfOrigin: String) : Coffee
-
 interface CoffeeApi {
     @GET("/")
-    suspend fun getCoffee(): CoffeeResponse
+    fun get(): Mono<Coffee>
 }

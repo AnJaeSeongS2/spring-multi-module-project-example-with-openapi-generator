@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sonan.sample.coffee.api.client.CoffeeApiClientAutoConfiguration
+  com.linecorp.sample.coffee.api.client.CoffeeApiClientAutoConfiguration

@@ -1,8 +1,8 @@
 package com.linecorp.sample.coffee.protocol
 
 /**
- * @author: Jaeseong An
- * @since: JEUS 21.0.0.0
- * Created Date: 2021-08-19
- */class CoffeeResponse {
-}
+ * @author: jaeseong_an
+ * @github: https://github.com/AnJaeSeongS2
+ * @since: 2021-08-19
+ */
+data class CoffeeResponse(override val name: String, override val countryOfOrigin: String) : Coffee

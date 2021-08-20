@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Shop's API Documentation
+  description: >-
+    coffee와 juice에 대한 shop's api이다.
+  contact:
+    email: jindam91@naver.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 0.0.3
+externalDocs:
+  description: Source Repo
+  url: 'https://github.com/line/gradle-multi-project-support-sample/'
+servers:
+  - url: 'http://localhost:8080'
+    description: kotlin version's shop api server
+  - url: 'http://localhost:8081'
+    description: kotlin version's coffee api server
+  - url: 'http://localhost:8082'
+    description: kotlin version's juice api server
+  - url: 'http://localhost:8090'
+    description: java version's shop api server
+  - url: 'http://localhost:8091'
+    description: java version's coffee api server
+  - url: 'http://localhost:8092'
+    description: java version's juice api server
+tags:
+  - name: shop
+    description: 가게 apis
+  - name: coffee
+    description: 커피 apis
+  - name: juice
+    description: 쥬스 apis
+paths:
+  /:
+    get:
+      tags:
+        - shop
+      description: 가게 종합 정보를 모두 제공
+      responses:
+        200:
+          description: 가게 종합 정보
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootResponse'
+  /coffee:
+    get:
+      tags:
+        - shop
+      description: 커피 정보 제공.
+      responses:
+        200:
+          description: 커피 정보
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coffee'
+  /juice:
+    get:
+      tags:
+        - shop
+      description: 쥬스 정보 제공.
+      responses:
+        200:
+          description: 쥬스 정보
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Juice'
+components:
+  schemas:
+    Coffee:
+      description: 커피 정보
+      type: object
+      required:
+        - name
+        - countryOfOrigin
+      properties:
+        name:
+          description: 커피의 이름
+          type: string
+          readOnly: true
+        countryOfOrigin:
+          description: 커피의 원산지
+          type: string
+          readOnly: true
+    Juice:
+      description: 쥬스 정보
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: 쥬스의 이름
+          type: string
+          readOnly: true
+    CoffeeResponse:
+      description: 커피 정보 응답
+    JuiceResponse:
+      description: 쥬스 정보 응답
+    RootResponse:
+      description: 커피와 쥬스에 대한 응답
+      type: object
+      required:
+        - coffee
+        - juice
+      properties:
+        coffee:
+          $ref: '#/components/schemas/Coffee'
+        juice:
+          $ref: '#/components/schemas/Juice'

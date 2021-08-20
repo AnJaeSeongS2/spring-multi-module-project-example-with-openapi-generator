@@ -1,0 +1,9 @@
+{
+  "basePackage": "com.sonan.example",
+  "apiPackage": "com.sonan.example.api",
+  "modelPackage": "com.sonan.example.model",
+  "configPackage": "com.sonan.example.config",
+  "sortModelPropertiesByRequiredFlag": true,
+  "sortParamsByRequiredFlag": true,
+  "dateLibrary": "java8"
+}

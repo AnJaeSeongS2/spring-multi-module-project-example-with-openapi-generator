@@ -14,17 +14,21 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     id("java")
-    id("org.springframework.boot").version("2.2.1.RELEASE").apply(false)
-    id("io.spring.dependency-management").version("1.0.8.RELEASE").apply(false)
+    id("org.springframework.boot") version("2.2.1.RELEASE") apply(false)
+    id("io.spring.dependency-management") version("1.0.8.RELEASE") apply(false)
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
     kotlin("kapt") version "1.3.50"
-    id("com.linecorp.build-recipe-plugin") version "1.0.1"
-    id("com.linecorp.recursive-git-log-plugin") version "1.0.1"
-    id("io.freefair.lombok").version("5.2.1").apply(false)
+    id("com.linecorp.build-recipe-plugin") version "1.1.1"
+    id("com.linecorp.recursive-git-log-plugin") version "1.1.1"
+    id("io.freefair.lombok") version("5.2.1") apply(false)
+    id("org.openapi.generator") version("5.2.1") apply(false)
 }
 
 allprojects {
+    tasks.withType(JavaCompile::class) {
+        options.encoding = "UTF-8"
+    }
     repositories {
         mavenCentral()
     }
@@ -32,6 +36,51 @@ allprojects {
 
 subprojects {
     apply(plugin = "java")
+}
+
+
+configureByTypeHaving("open_api_spec") {
+    println(project)
+    apply(plugin = "org.openapi.generator")
+
+    // ***** openapi-generator scope start
+    fun createOpenApiGenerateTask(inputGeneratorName: String, codeGenOutputDir: String): Task {
+        return tasks.create("openApiGenerate-" + inputGeneratorName, org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class.java) {
+            group = "openapi tools"
+            inputSpec.set("$projectDir/index.yml")
+            generatorName.set(inputGeneratorName)
+            configFile.set("$projectDir/codeGenConfigs/${inputGeneratorName}.json")
+            outputDir.set("${codeGenOutputDir}/${inputGeneratorName}")
+        }
+    }
+    tasks.findByPath("openApiGenerate")?.enabled = false
+//    project.gradle.startParameter.excludedTaskNames.add("openApiGenerate")
+
+//    val generatorNames = arrayOf("java", "spring", "javascript", "typescript-axios")
+    val generatorNames = arrayOf("java", "spring")
+    val codeGenOutputDir = "$buildDir/codeGenOutput"
+    generatorNames.forEach {
+        createOpenApiGenerateTask(it, codeGenOutputDir)
+    }
+
+    tasks.create("openApiGenerate-all") {
+        group = "openapi tools"
+        dependsOn.add("openApiGenerate-java")
+        dependsOn.add("openApiGenerate-spring")
+    }
+
+    task("openApiGenerate-all-clean", Delete::class) {
+        group = "openapi tools"
+        delete.add(codeGenOutputDir)
+    }
+
+    extensions.getByType(org.openapitools.generator.gradle.plugin.extensions.OpenApiGeneratorValidateExtension::class)
+        .inputSpec.set("$projectDir/index.yml")
+    //// ***** openapi-generator scope end
+}
+
+configureByTypePrefix("java") {
+    apply(plugin = "io.freefair.lombok")
 }
 
 configureByTypePrefix("kotlin") {
@@ -114,10 +163,6 @@ configure(byTypeHaving("boot") and byTypeSuffix("lib")) {
             enabled = false
         }
     }
-}
-
-configureByTypePrefix("java") {
-    apply(plugin = "io.freefair.lombok")
 }
 
 configure(byTypeSuffix("boot-application") and byLabel("spring-boot-webflux")) {

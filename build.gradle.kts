@@ -1,7 +1,4 @@
-import com.linecorp.support.project.multi.recipe.configure
-import com.linecorp.support.project.multi.recipe.configureByTypeHaving
-import com.linecorp.support.project.multi.recipe.configureByTypePrefix
-import com.linecorp.support.project.multi.recipe.configureByTypeSuffix
+import com.linecorp.support.project.multi.recipe.*
 import com.linecorp.support.project.multi.recipe.matcher.ProjectMatchers.Companion.byLabel
 import com.linecorp.support.project.multi.recipe.matcher.ProjectMatchers.Companion.byTypeHaving
 import com.linecorp.support.project.multi.recipe.matcher.ProjectMatchers.Companion.byTypePrefix
@@ -38,9 +35,7 @@ subprojects {
     apply(plugin = "java")
 }
 
-
 configureByTypeHaving("open_api_spec") {
-    println(project)
     apply(plugin = "org.openapi.generator")
 
     // ***** openapi-generator scope start
@@ -68,15 +63,52 @@ configureByTypeHaving("open_api_spec") {
         dependsOn.add("openApiGenerate-java")
         dependsOn.add("openApiGenerate-spring")
     }
+    tasks.findByName("processResources")?.dependsOn?.add("openApiGenerate-all")
 
     task("openApiGenerate-all-clean", Delete::class) {
         group = "openapi tools"
         delete.add(codeGenOutputDir)
     }
+    tasks.findByName("clean")?.dependsOn?.add("openApiGenerate-all-clean")
 
     extensions.getByType(org.openapitools.generator.gradle.plugin.extensions.OpenApiGeneratorValidateExtension::class)
         .inputSpec.set("$projectDir/index.yml")
     //// ***** openapi-generator scope end
+}
+
+configure(byTypeHaving("open_api_source_builder") and byTypeHaving("java")) {
+    val parentDir = "${parent?.projectDir}"
+    if (file("$parentDir/build/codeGenOutput/java/build.gradle").exists()) {
+        apply(from = "$parentDir/build/codeGenOutput/java/build.gradle")
+    }
+
+    sourceSets {
+        main.configure {
+            java.setSrcDirs(listOf("$parentDir/build/codeGenOutput/java/src/main/java"))
+        }
+    }
+
+    tasks.findByName("compileJava")?.doFirst {
+        if (!file("$parentDir/build/codeGenOutput/java/build.gradle").exists()) {
+            throw AssertionError("The Code generation to $parentDir/build/codeGenOutput/java folder has not yet progressed.")
+        }
+    }
+//    val parentDir = "${parent?.projectDir}"
+//    if (file("$parentDir/build/codeGenOutput/java/build.gradle").exists()) {
+//        apply(from ="$parentDir/build/codeGenOutput/java/build.gradle")
+//    } else {
+//        tasks.all {
+//            doFirst {
+//                throw AssertionError("The Code generation to $parentDir/build/codeGenOutput/java folder has not yet progressed.")
+//            }
+//        }
+//    }
+//
+//    sourceSets {
+//        main.configure {
+//            java.setSrcDirs(listOf("$parentDir/build/codeGenOutput/java/src/main/java"))
+//        }
+//    }
 }
 
 configureByTypePrefix("java") {

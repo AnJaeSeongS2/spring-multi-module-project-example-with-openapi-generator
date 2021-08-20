@@ -2,6 +2,7 @@ rootProject.name = "gradle-multi-project-support-sample"
 
 // api doc
 include("api-doc")
+include("api-doc:model-java")
 
 // kotlin version
 include("coffee:protocol")

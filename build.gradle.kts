@@ -93,22 +93,6 @@ configure(byTypeHaving("open_api_source_builder") and byTypeHaving("java")) {
             throw AssertionError("The Code generation to $parentDir/build/codeGenOutput/java folder has not yet progressed.")
         }
     }
-//    val parentDir = "${parent?.projectDir}"
-//    if (file("$parentDir/build/codeGenOutput/java/build.gradle").exists()) {
-//        apply(from ="$parentDir/build/codeGenOutput/java/build.gradle")
-//    } else {
-//        tasks.all {
-//            doFirst {
-//                throw AssertionError("The Code generation to $parentDir/build/codeGenOutput/java folder has not yet progressed.")
-//            }
-//        }
-//    }
-//
-//    sourceSets {
-//        main.configure {
-//            java.setSrcDirs(listOf("$parentDir/build/codeGenOutput/java/src/main/java"))
-//        }
-//    }
 }
 
 configureByTypePrefix("java") {

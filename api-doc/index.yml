@@ -81,11 +81,9 @@ components:
         name:
           description: 커피의 이름
           type: string
-          readOnly: true
         countryOfOrigin:
           description: 커피의 원산지
           type: string
-          readOnly: true
     Juice:
       description: 쥬스 정보
       type: object
@@ -95,7 +93,6 @@ components:
         name:
           description: 쥬스의 이름
           type: string
-          readOnly: true
     CoffeeResponse:
       description: 커피 정보 응답
     JuiceResponse:

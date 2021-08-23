@@ -1,6 +1,6 @@
 package com.linecorp.sample.coffee.api.client
 
-import com.linecorp.sample.coffee.protocol.Coffee
+import com.sonan.example.model.Coffee
 import reactor.core.publisher.Mono
 import retrofit2.http.GET
 

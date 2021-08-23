@@ -135,11 +135,8 @@ configureByTypePrefix("kotlin") {
     }
 }
 
-configureByTypeSuffix("lib") {
-    apply(plugin = "java-library")
-}
-
 configureByTypeHaving("boot") {
+    apply(plugin = "java-library")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin-spring")
@@ -197,6 +194,18 @@ configure(byTypeHaving("boot") and byTypeSuffix("lib")) {
     }
 }
 
+configure(byTypeHaving("with_model_java") and byTypeSuffix("boot-lib")) {
+    dependencies {
+        api(project(":api-doc:model-java"))
+    }
+}
+
+configure(byTypeHaving("with_model_java") and byTypeSuffix("boot-application")) {
+    dependencies {
+        api(project(":api-doc:model-java"))
+    }
+}
+
 configure(byTypeSuffix("boot-application") and byLabel("spring-boot-webflux")) {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -228,7 +237,7 @@ configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client")) {
     }
 }
 
-configure(byTypeSuffix("boot-lib") and byLabel("retrofit2-client") and byTypeHaving("kotlin")) {
+configure(byTypeHaving("kotlin")and byTypeSuffix("boot-lib") and byLabel("retrofit2-client")) {
     dependencies {
         implementation("com.squareup.retrofit2:converter-jackson")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

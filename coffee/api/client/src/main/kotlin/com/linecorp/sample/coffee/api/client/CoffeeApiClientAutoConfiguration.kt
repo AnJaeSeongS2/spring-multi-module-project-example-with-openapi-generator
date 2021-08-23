@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
-import com.linecorp.sample.coffee.protocol.Coffee
-import com.linecorp.sample.coffee.protocol.CoffeeResponse
 import org.hibernate.validator.constraints.URL
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
@@ -27,7 +25,7 @@ class CoffeeApiClientAutoConfiguration {
     fun coffeeApi(properties: CoffeeApiClientProperties) = Retrofit
             .Builder()
             .baseUrl(properties.baseUrl)
-            .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().registerTypeModule<Coffee, CoffeeResponse>()))
+            .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper()))
             .addCallAdapterFactory(ReactorCallAdapterFactory.create())
             .build()
             .create<CoffeeApi>()

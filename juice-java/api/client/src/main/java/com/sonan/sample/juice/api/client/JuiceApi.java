@@ -1,6 +1,6 @@
 package com.sonan.sample.juice.api.client;
 
-import com.sonan.sample.juice.protocol.Juice;
+import com.sonan.example.model.Juice;
 import reactor.core.publisher.Mono;
 import retrofit2.http.GET;
 

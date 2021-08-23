@@ -1,6 +1,6 @@
 package com.sonan.sample.coffee.api.server;
 
-import com.sonan.sample.coffee.protocol.Coffee;
+import com.sonan.example.model.Coffee;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ public class CoffeeApplication {
     public RouterFunction<ServerResponse> handler() {
         return nest(
             path("/"),
-            route().GET("", (req) -> ServerResponse.ok().body(Mono.just(new Coffee("coffee-java", "Jamaica-java")), Coffee.class)).build()
+            route().GET("", (req) -> ServerResponse.ok().body(Mono.just(new Coffee().name("coffee-java").countryOfOrigin("Jamaica-java")), Coffee.class)).build()
         );
     }
 

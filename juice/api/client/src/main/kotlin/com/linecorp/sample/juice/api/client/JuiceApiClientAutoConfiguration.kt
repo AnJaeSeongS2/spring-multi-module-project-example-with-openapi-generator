@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory
-import com.linecorp.sample.juice.protocol.Juice
-import com.linecorp.sample.juice.protocol.JuiceResponse
 import okhttp3.OkHttpClient
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
@@ -38,7 +36,7 @@ class JuiceApiClientAutoConfiguration {
                     }
                     .build())
             .baseUrl(properties.baseUrl)
-            .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().registerTypeModule<Juice, JuiceResponse>()))
+            .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper()))
             .addCallAdapterFactory(ReactorCallAdapterFactory.create())
             .build()
             .create<JuiceApi>()

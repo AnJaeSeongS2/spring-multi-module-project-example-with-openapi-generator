@@ -1,6 +1,6 @@
 package com.linecorp.sample.coffee.api.server
 
-import com.linecorp.sample.coffee.protocol.CoffeeResponse
+import com.sonan.example.model.Coffee
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -16,7 +16,7 @@ class CoffeeApplication {
     @Bean
     fun handler() = nest(path("/"), router {
         GET("") {
-            ServerResponse.ok().body(CoffeeResponse("coffee", "Jamaica").toMono())
+            ServerResponse.ok().body(Coffee().name("coffee").countryOfOrigin("Jamaica").toMono())
         }
     })
 }
